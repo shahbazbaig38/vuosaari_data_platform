@@ -23,6 +23,23 @@ This project combines ELT and ETL principles:
 4. Loads the cleaned values into the `energy_consumption` table for analytics and reporting.
 5. Uses PostgreSQL unique constraints to avoid duplicate records for the same timestamp, reporting group, location name, and unit.
 
+## Architecture diagram
+
+```mermaid
+flowchart LR
+    A[Helsinki Open API\nEnergyData Daily API] --> B[Python ETL/ELT Pipeline]
+    B --> C[Raw landing layer\nenergy_api_raw]
+    B --> D[Transformer / Validator]
+    D --> E[Cleaned analytical layer\nenergy_consumption]
+    E --> F[PostgreSQL Database]
+    F --> G[Analytics / Dashboards / Reporting]
+
+    C --> H[Audit trail\nRaw payload retention]
+    D --> I[Data quality checks\nDeduplication / normalization]
+```
+
+This architecture keeps the original API payload for traceability and reprocessing, while the transformed data becomes the trusted layer for downstream analysis.
+
 ## Project structure
 
 ```text
