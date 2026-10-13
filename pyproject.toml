@@ -1,0 +1,14 @@
+[project]
+name = "vuosaari-data-platform"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "logging>=0.4.9.6",
+    "pandas>=3.0.6",
+    "psycopg[binary]>=3.3.6",
+    "requests>=2.34.2",
+    "toml>=0.10.2",
+    "urllib3>=2.8.0",
+]

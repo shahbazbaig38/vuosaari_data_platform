@@ -1,0 +1,13 @@
+BASE_URL = 'https://helsinki-openapi.nuuka.cloud/api/v1.0/EnergyData/Daily/ListByProperty'
+Record = 'LocationName'
+SearchString = 'vuos'
+ReportingGroup = 'Electricity'
+StartTime = '2026-01-01'
+EndTime = '2026-12-10'
+
+[postgresql]
+host = "localhost"
+port = 5432
+dbname = "vuosaari"
+user = "postgres"
+password = "0308"
