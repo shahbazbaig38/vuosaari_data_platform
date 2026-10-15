@@ -1,3 +1,7 @@
+```
+
+```
+
 # Vuosaari Data Platform
 
 A lightweight ELT and ETL pipeline for collecting daily electricity consumption data for Vuosaari and storing it in PostgreSQL. The project first loads the raw API response into the database, then transforms and cleans the data before making it available for analysis. This ELT-first design preserves the original payload while still applying ETL-style validation and normalization.
@@ -108,7 +112,8 @@ Update the values as needed for your environment before running the pipeline.
 Create the required database and tables before running the ETL job:
 
 Create database by running in *psql*
-```bash
+
+```psql
 CREATE DATABASE vuosaari;
 ```
 
@@ -168,4 +173,3 @@ Potential next steps for the project include:
 - adding tests for validation and database writes
 - exposing dashboards or analytics on top of the cleaned data
 - separating environment-specific configuration from the repository
-
