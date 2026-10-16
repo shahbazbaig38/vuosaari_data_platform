@@ -25,18 +25,7 @@ This project combines ELT and ETL principles:
 
 ## Architecture diagram
 
-```mermaid
-flowchart LR
-    A[Helsinki Open API\nEnergyData Daily API] --> B[Python ETL/ELT Pipeline]
-    B --> C[Raw landing layer\nenergy_api_raw]
-    B --> D[Transformer / Validator]
-    D --> E[Cleaned analytical layer\nenergy_consumption]
-    E --> F[PostgreSQL Database]
-    F --> G[Analytics / Dashboards / Reporting]
-
-    C --> H[Audit trail\nRaw payload retention]
-    D --> I[Data quality checks\nDeduplication / normalization]
-```
+![Architecture Diagram](architecture.png "Architecture Diagram")
 
 This architecture keeps the original API payload for traceability and reprocessing, while the transformed data becomes the trusted layer for downstream analysis.
 
