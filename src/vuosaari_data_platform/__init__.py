@@ -1,0 +1,1 @@
+"""Vuosaari data ingestion pipeline."""

@@ -1,7 +1,13 @@
 from psycopg.types.json import Jsonb
 import logging
 
-def save_raw_response(conn, url: str, params: dict, data:list) -> int:
+
+def save_raw_response(
+    conn,
+    url: str,
+    params: dict[str, str],
+    data: list[dict[str, object]],
+) -> int:
     """Save the complete JSON response to PostgreSQL."""
 
     query = """
