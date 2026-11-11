@@ -1,7 +1,14 @@
-from psycopg.types.json import Jsonb
 import logging
 
-def save_raw_response(conn, url: str, params: dict, data:list) -> int:
+from psycopg.types.json import Jsonb
+
+
+def save_raw_response(
+    conn,
+    url: str,
+    params: dict[str, str],
+    data: list[dict[str, object]],
+) -> int:
     """Save the complete JSON response to PostgreSQL."""
 
     query = """
@@ -17,7 +24,7 @@ def save_raw_response(conn, url: str, params: dict, data:list) -> int:
     with conn.transaction():
         row = conn.execute(
             query,
-            (url, Jsonb(params), Jsonb(data))
+            (url, Jsonb(params), Jsonb(data)),
         ).fetchone()
 
     raw_id = row[0]

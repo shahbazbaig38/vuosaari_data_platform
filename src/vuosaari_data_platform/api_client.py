@@ -1,7 +1,11 @@
 import logging
+
 import requests
 
-def fetch_data(url: str, params: dict) -> tuple[list, str]:
+
+def fetch_data(
+    url: str, params: dict[str, str]
+) -> tuple[list[dict[str, object]], str]:
     """Fetch the API response as a JSON list."""
 
     response = requests.get(url, params=params, timeout=60)
@@ -9,7 +13,9 @@ def fetch_data(url: str, params: dict) -> tuple[list, str]:
 
     data = response.json()
 
-    if not isinstance(data, list):
+    if not isinstance(data, list) or not all(
+        isinstance(item, dict) for item in data
+    ):
         raise ValueError("Expected a JSON list from the API")
 
     logging.info("Response URL: %s", response.url)

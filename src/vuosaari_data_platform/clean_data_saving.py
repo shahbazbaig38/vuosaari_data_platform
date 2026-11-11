@@ -1,6 +1,7 @@
 import logging
 
-def save_clean_data(conn, records: list) -> int:
+
+def save_clean_data(conn, records: list[tuple]) -> int:
     """Insert or update cleaned energy records in postgresql."""
 
     if not records:
