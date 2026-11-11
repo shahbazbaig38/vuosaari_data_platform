@@ -15,25 +15,30 @@ The pipeline currently targets:
 
 ## What the pipeline does
 
-Each pipeline run:
+This project combines ELT and ETL principles:
 
-1. Finds the latest measurement timestamp in `energy_consumption`.
-2. Requests daily energy data from the preceding day through today; if the table is empty, it requests the previous three years.
-3. Stores the original API response and request metadata in `energy_api_raw`.
-4. Validates and normalizes each record.
-5. Upserts valid measurements into `energy_consumption`.
+1. Extracts daily energy data from the configured API endpoint.
+2. Loads the complete raw JSON payload into PostgreSQL as the first storage stage, preserving the original source data.
+3. Transforms the raw dataset by validating and cleaning each record.
+4. Loads the cleaned values into the `energy_consumption` table for analytics and reporting.
+5. Uses PostgreSQL unique constraints to avoid duplicate records for the same timestamp, reporting group, location name, and unit.
 
-## Pipeline flow
+## Architecture diagram
 
-![High-resolution animated diagram of the incremental daily ingestion flow](architecture.gif)
+```mermaid
+flowchart LR
+    A[Helsinki Open API\nEnergyData Daily API] --> B[Python ETL/ELT Pipeline]
+    B --> C[Raw landing layer\nenergy_api_raw]
+    B --> D[Transformer / Validator]
+    D --> E[Cleaned analytical layer\nenergy_consumption]
+    E --> F[PostgreSQL Database]
+    F --> G[Analytics / Dashboards / Reporting]
 
-The animation is 1600 x 700 pixels for crisp on-screen sharing.
+    C --> H[Audit trail\nRaw payload retention]
+    D --> I[Data quality checks\nDeduplication / normalization]
+```
 
-The first run requests a three-year backfill. Later runs read the latest stored
-measurement and request from one day before it through the current date. The
-overlap captures late or corrected daily data; the unique key and upsert prevent
-duplicate measurements. Each response is retained in `energy_api_raw` before
-records are validated and upserted into `energy_consumption`.
+This architecture keeps the original API payload for traceability and reprocessing, while the transformed data becomes the trusted layer for downstream analysis.
 
 ## Project structure
 
